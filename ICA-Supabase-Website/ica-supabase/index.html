@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="xha7SpMtDY2kXFY8tKTHQokz4pqo8a_2AOvQ06OMIcs" />
 <meta charset="UTF-8"/>
+  <meta name="google-site-verification" content="xha7SpMtDY2kXFY8tKTHQokz4pqo8a_2AOvQ06OMIcs" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ideal Children Academy Batrauliya | Best School in Paharpur East Champaran 845458</title>
 <meta name="description" content="Ideal Children Academy Batrauliya, Paharpur, East Champaran 845458 – Nurturing excellence in education. Admissions open."/>
@@ -327,7 +327,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
       <li><a href="#notices">Notices</a></li>
       <li><a href="#principal">Principal</a></li>
       <li><a href="#admission">Admission</a></li>
-      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-cta">
@@ -512,7 +511,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
     </div>
   </div>
 </section>
-  <!-- GALLERY -->
+
 <!-- FOOTER -->
 <footer>
   <div class="container">
@@ -523,7 +522,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
       </div>
       <div class="footer-col">
         <h4>Quick Links</h4>
-        <ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#facilities">Facilities</a></li><li><a href="#notices">Notices</a></li><li><a href="#principal">Principal</a></li><li><a href="#admission">Admission</a></li><li><a href="#contact">Contact</a></li><li><a href="#gallery">Gallery</a></li></ul>
+        <ul><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#facilities">Facilities</a></li><li><a href="#notices">Notices</a></li><li><a href="#principal">Principal</a></li><li><a href="#admission">Admission</a></li><li><a href="#contact">Contact</a></li></ul>
       </div>
       <div class="footer-col">
         <h4>Information</h4>
@@ -1225,24 +1224,7 @@ async function delGallery(id) {
     _gallery = _gallery.filter(x => x.id != id); renderGallery(); toast('Deleted.');
   } catch { toast('Error deleting.'); }
 }
-    grid.innerHTML = rows.map(item => `
-      <div class="fac-card">
-        <img
-          src="${item.image_url}"
-          alt="${item.caption}"
-          style="width:100%;height:220px;object-fit:cover;border-radius:10px;"
-        >
-        <h3 style="margin-top:10px">${item.caption}</h3>
-        <p>${item.category}</p>
-      </div>
-    `).join('');
 
-  } catch (e) {
-    console.error(e);
-  }
-}
-
-// FUNCTION KE BAHAR
 // ══════════════════════════════════════════════
 //  CHANGE PASSWORD
 // ══════════════════════════════════════════════
