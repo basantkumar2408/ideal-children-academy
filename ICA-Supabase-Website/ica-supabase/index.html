@@ -537,25 +537,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
 </footer>
 
 <!-- SETUP SCREEN (First time Supabase config) -->
-<div id="setupOverlay">
-  <div class="setup-box">
-    <h2>⚙️ One-Time Setup</h2>
-    <p>Enter your Supabase project details to enable real database. This is a one-time step.</p>
-    <div class="setup-step">
-      <h4>Step 1 — Supabase URL</h4>
-      Get from: Supabase Dashboard → Project Settings → API → <code>Project URL</code>
-      <input type="text" id="setup-url" placeholder="https://xxxxxxxxxxxx.supabase.co" autocomplete="off"/>
-    </div>
-    <div class="setup-step">
-      <h4>Step 2 — Anon Key</h4>
-      Get from: Supabase Dashboard → Project Settings → API → <code>anon public</code> key
-      <input type="text" id="setup-key" placeholder="eyJhbGciOiJIUzI1NiIs..." autocomplete="off"/>
-    </div>
-    <button class="setup-btn" onclick="saveSetup()">Save & Connect →</button>
-    <div class="setup-err" id="setup-err"></div>
-    <p style="margin-top:16px;font-size:12px;color:#888;text-align:center">Free tier: supabase.com — No credit card needed</p>
-  </div>
-</div>
+
 
 <!-- LOGIN -->
 <div id="loginOverlay">
@@ -715,25 +697,22 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
 // ══════════════════════════════════════════════
 //  CONFIG — Supabase stored in sessionStorage
 // ══════════════════════════════════════════════
-const CFG_KEY = 'ica_cfg';
-let SB = null; // Supabase client
+// ══════════════════════════════════════════════
+// SUPABASE CONFIG (PERMANENT)
+// ══════════════════════════════════════════════
 
-function getCfg() {
-  try { return JSON.parse(sessionStorage.getItem(CFG_KEY) || localStorage.getItem(CFG_KEY) || 'null'); }
-  catch { return null; }
-}
-function saveCfg(url, key) {
-  const c = JSON.stringify({ url, key });
-  localStorage.setItem(CFG_KEY, c);
-  sessionStorage.setItem(CFG_KEY, c);
-}
+// ══════════════════════════════════════════════
+// SUPABASE CONFIG (PERMANENT)
+// ══════════════════════════════════════════════
 
-function initSupabase(url, key) {
-  try {
-    SB = window.supabase.createClient(url, key);
-    return true;
-  } catch(e) { return false; }
-}
+const SUPABASE_URL = "https://rronqihvdhhblcxdooah.supabase.co";
+
+const SUPABASE_ANON_KEY = "sb_publishable_4gQYaOB17zXmVDbHY6biOw_yGPU8vLs";
+
+const SB = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
 // ══════════════════════════════════════════════
 //  SECURITY CONSTANTS
@@ -1296,7 +1275,7 @@ window.addEventListener('scroll', () => {
 //  INIT
 // ══════════════════════════════════════════════
 (async function init() {
-  const cfg = getCfg();
+  const cfg = saveSetup();
   if (!cfg || !cfg.url || !cfg.key) {
     document.getElementById('setupOverlay').classList.add('show');
     document.getElementById('pub-notices-grid').innerHTML = '<div class="notices-empty">No notices yet.</div>';
