@@ -830,34 +830,6 @@ function hideLoading() { document.getElementById('loadingOverlay').classList.rem
 // ══════════════════════════════════════════════
 //  SETUP
 // ══════════════════════════════════════════════
-async function saveSetup() {
-  const url = document.getElementById('setup-url').value.trim();
-  const key = document.getElementById('setup-key').value.trim();
-  const errEl = document.getElementById('setup-err');
-  errEl.style.display = 'none';
-  if (!url || !key) { errEl.textContent = 'Please enter both URL and Key.'; errEl.style.display = 'block'; return; }
-  if (!url.startsWith('https://')) { errEl.textContent = 'URL must start with https://'; errEl.style.display = 'block'; return; }
-  showLoading('Testing connection...');
-  try {
-    const testSB = window.supabase.createClient(url, key);
-    const { error } = await testSB.from('ica_notices').select('id').limit(1);
-    if (error && error.code !== 'PGRST116' && !error.message.includes('does not exist')) {
-      throw new Error('Connection failed: ' + error.message);
-    }
-    saveCfg(url, key);
-    SB = testSB;
-    hideLoading();
-    document.getElementById('setupOverlay').classList.remove('show');
-    await ensureTables();
-    toast('✅ Connected successfully!');
-    renderPublicNotices();
-  } catch(e) {
-    hideLoading();
-    errEl.textContent = '❌ ' + e.message + '. Check URL and Key.';
-    errEl.style.display = 'block';
-  }
-}
-
 async function ensureTables() {
   // Tables are created via Supabase dashboard SQL editor
   // We just verify they exist
@@ -1011,7 +983,13 @@ async function submitEnquiry() {
   btn.disabled = true; btn.textContent = 'Submitting...';
   try {
     if (SB) {
-      await dbInsert('ica_enquiries', { parent_name: parent, child_name: child, phone, class: cls, area, enquiry_type: type, message: msg, status: 'New' });
+      await dbInsert('ica_enquiries', {
+  parent_name: parent,
+  student_name: child,
+  class_name: cls,
+  phone: phone,
+  email: ''
+});
     }
     ['cf_parent','cf_child','cf_phone','cf_area','cf_msg'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('cf_class').value = '';
@@ -1272,20 +1250,23 @@ window.addEventListener('scroll', () => {
 });
 
 // ══════════════════════════════════════════════
-//  INIT
+// ══════════════════════════════════════════════
+// INIT
 // ══════════════════════════════════════════════
 (async function init() {
-  const cfg = saveSetup();
-  if (!cfg || !cfg.url || !cfg.key) {
-    document.getElementById('setupOverlay').classList.add('show');
-    document.getElementById('pub-notices-grid').innerHTML = '<div class="notices-empty">No notices yet.</div>';
-    return;
+
+  try {
+
+    await renderPublicNotices();
+
+    if (typeof loadPublicGallery === 'function') {
+      await loadPublicGallery();
+    }
+
+  } catch (e) {
+    console.error(e);
   }
-  if (!initSupabase(cfg.url, cfg.key)) {
-    document.getElementById('setupOverlay').classList.add('show');
-    return;
-  }
-  await renderPublicNotices();
+
 })();
 </script>
 </body>
