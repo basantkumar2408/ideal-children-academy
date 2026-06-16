@@ -340,7 +340,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
     <a href="#home" onclick="closeMob()">Home</a>
     <a href="#about" onclick="closeMob()">About Us</a>
     <a href="#facilities" onclick="closeMob()">Facilities</a>
-    <a href="#gallery" onclick="closeMob()">Gallery</a>
     <a href="#notices" onclick="closeMob()">Notices</a>
     <a href="#principal" onclick="closeMob()">Principal</a>
     <a href="#admission" onclick="closeMob()">Admission</a>
@@ -514,20 +513,6 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
   </div>
 </section>
   <!-- GALLERY -->
-<section id="gallery">
-  <div class="container">
-    <div class="center">
-      <div class="sec-eyebrow">School Memories</div>
-      <h2 class="sec-title">Gallery</h2>
-      <p class="sec-sub">Events, activities and campus highlights.</p>
-    </div>
-
-    <div id="gallery-grid" class="fac-grid">
-      <div class="no-data">Loading gallery...</div>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
 <footer>
   <div class="container">
@@ -1240,18 +1225,6 @@ async function delGallery(id) {
     _gallery = _gallery.filter(x => x.id != id); renderGallery(); toast('Deleted.');
   } catch { toast('Error deleting.'); }
 }
-  async function loadPublicGallery() {
-  try {
-    const rows = await dbSelect('ica_gallery');
-
-    const grid = document.getElementById('gallery-grid');
-    if (!grid) return;
-
-    if (!rows || rows.length === 0) {
-      grid.innerHTML = '<div class="no-data">No gallery images available.</div>';
-      return;
-    }
-
     grid.innerHTML = rows.map(item => `
       <div class="fac-card">
         <img
@@ -1270,7 +1243,6 @@ async function delGallery(id) {
 }
 
 // FUNCTION KE BAHAR
-loadPublicGallery();
 // ══════════════════════════════════════════════
 //  CHANGE PASSWORD
 // ══════════════════════════════════════════════
