@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-  <meta name="google-site-verification" content="9h4aZnTT2QShK_5RpGsJxAdpD-20guPafjKCQCH-mnY" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ideal Children Academy Batrauliya | Best School East Champaran 845458</title>
 <meta name="description" content="Ideal Children Academy Batrauliya, Paharpur, East Champaran 845458. Admissions open. Quality education Bihar."/>
@@ -510,7 +509,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
 <!-- ADMISSION PAGE -->
 <div class="adm-page" id="admPage">
   <div class="adm-header">
-    <div><h2>Online Admission Form 2025-26</h2><div class="adm-header-sub">Ideal Children Academy Batrauliya, East Champaran 845458</div></div>
+    <div><h2>Online Admission Form <span id="admYearLabel">2025-26</span></h2><div class="adm-header-sub">Ideal Children Academy Batrauliya, East Champaran 845458</div></div>
     <button class="adm-close" onclick="closeAdmissionPage()">X</button>
   </div>
   <div id="admClosedMsg" style="display:none;">
@@ -707,7 +706,11 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
       <div class="sb-sec">Content</div>
       <div class="sb-item" id="nav-notices" onclick="showPanel('notices')"><span class="sb-icon">&#128226;</span>Notices</div>
       <div class="sb-item" id="nav-gallery" onclick="showPanel('gallery')"><span class="sb-icon">&#128444;</span>Gallery</div>
+      <div class="sb-sec">Forms</div>
+      <div class="sb-item" id="nav-formbuilder" onclick="showPanel('formbuilder')"><span class="sb-icon">&#128221;</span>Form Builder</div>
+      <div class="sb-item" id="nav-customforms" onclick="showPanel('customforms')"><span class="sb-icon">&#128203;</span>Form Responses</div>
       <div class="sb-sec">Settings</div>
+      <div class="sb-item" id="nav-sitesettings" onclick="showPanel('sitesettings')"><span class="sb-icon">&#9881;</span>Site Settings</div>
       <div class="sb-item" id="nav-password" onclick="showPanel('password')"><span class="sb-icon">&#128274;</span>Change Password</div>
     </div>
     <div class="sb-logout" onclick="doLogout()"><span class="sb-icon">&#128682;</span>Logout</div>
@@ -809,6 +812,60 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
         </div>
       </div>
       <!-- PASSWORD -->
+      <div class="admin-panel" id="panel-formbuilder">
+        <div class="acard">
+          <div class="acard-head">
+            <div class="acard-title">Admission Form Builder</div>
+            <button class="btn-add" onclick="resetFormBuilder()">+ New Section</button>
+          </div>
+          <div class="aform">
+            <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;">Customize the public admission form. Add, edit or remove sections and fields. Click "Publish" to make it live on the website.</p>
+            <div id="fb-sections"></div>
+            <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap;">
+              <button class="btn-add" onclick="fbAddSection()">+ Add Section</button>
+              <button class="btn-pdf" onclick="fbSave(false)">Save Draft</button>
+              <button class="btn-excel" onclick="fbSave(true)">Publish Live</button>
+              <button class="btn-prnt" onclick="fbLoadDefault()" style="background:#64748b">Reset to Default</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="panel-customforms">
+        <div class="acard">
+          <div class="acard-head"><div class="acard-title">Custom Forms (Non-Admission)</div><button class="btn-add" onclick="openCustomFormEditor()">+ Create New Form</button></div>
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Form Title</th><th>Key</th><th>Status</th><th>Updated</th><th>Actions</th></tr></thead><tbody id="customforms-body"><tr><td colspan="6" class="no-data">Loading...</td></tr></tbody></table></div>
+        </div>
+        <div class="acard">
+          <div class="acard-head"><div class="acard-title">Form Responses</div>
+            <select class="fi" id="cf-select" onchange="loadCustomFormResponses()" style="min-width:200px"><option value="">Select a form...</option></select>
+          </div>
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th>#</th><th>Date</th><th>Summary</th><th>Status</th><th>Actions</th></tr></thead><tbody id="cfresp-body"><tr><td colspan="5" class="no-data">Select a form above.</td></tr></tbody></table></div>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="panel-sitesettings">
+        <div class="acard">
+          <div class="acard-head"><div class="acard-title">Admission Year</div></div>
+          <div class="aform">
+            <div class="fg" style="max-width:300px;"><label>Current Academic Year</label><input type="text" id="set-year" placeholder="e.g. 2026-27"/></div>
+            <p style="font-size:11.5px;color:var(--muted);margin-bottom:10px;">Used in the form title (e.g. "Admission Form 2026-27") and in application numbers (e.g. ICA/2026/0001).</p>
+            <button class="btn-add" onclick="saveSiteSetting('admission_year','set-year')">Save Year</button>
+          </div>
+        </div>
+        <div class="acard">
+          <div class="acard-head"><div class="acard-title">Website Theme Colors</div></div>
+          <div class="aform">
+            <div class="fg-row" style="max-width:500px;">
+              <div class="fg"><label>Primary / Gold Color</label><input type="color" id="set-gold" style="height:42px;cursor:pointer;"/></div>
+              <div class="fg"><label>Navy / Dark Color</label><input type="color" id="set-navy" style="height:42px;cursor:pointer;"/></div>
+            </div>
+            <p style="font-size:11.5px;color:var(--muted);margin-bottom:10px;">Changes apply to buttons, headers, and accents across the website.</p>
+            <button class="btn-add" onclick="saveTheme()">Apply Theme</button>
+          </div>
+        </div>
+      </div>
+
       <div class="admin-panel" id="panel-password">
         <div class="acard"><div class="acard-head"><div class="acard-title">Change Admin Password</div></div>
           <div class="pw-wrap">
@@ -836,7 +893,7 @@ footer{background:var(--navy);color:rgba(255,255,255,.6);padding:52px 0 24px;}
 
 <script>
 const API='/.netlify/functions/api';
-const ADM_API='/.netlify/functions/admission';
+const ADM_API='/.netlify/functions/api';
 let _adminToken=null;
 async function call(ep,action,method,body){
   const o={method:method||'GET',headers:{'Content-Type':'application/json'}};
@@ -866,7 +923,7 @@ function startLock(){
   clearInterval(lockInt);
   lockInt=setInterval(()=>{const r=Math.max(0,Math.ceil((lockUntil-Date.now())/1000));tm.textContent=r;if(r<=0){clearInterval(lockInt);btn.disabled=false;lk.style.display='none';resetFails();}},1000);
 }
-let sessEnd=0,sessT=null,sessWT=null,sessTick=null,_sessListenersAttached=false;
+let sessEnd=0,sessT=null,sessWT=null,sessTick=null;
 function startSession(){
   isLoggedIn=true;sessEnd=Date.now()+SESS_MIN*60000;
   clearTimeout(sessT);clearTimeout(sessWT);clearInterval(sessTick);
@@ -874,10 +931,7 @@ function startSession(){
   sessT=setTimeout(()=>doLogout(true),SESS_MIN*60000);
   const clk=document.getElementById('sessionClock');
   sessTick=setInterval(()=>{const r=Math.max(0,sessEnd-Date.now());clk.textContent=String(Math.floor(r/60000)).padStart(2,'0')+':'+String(Math.floor((r%60000)/1000)).padStart(2,'0');},1000);
-  if(!_sessListenersAttached){
-    ['mousemove','keydown','click'].forEach(ev=>document.getElementById('adminOverlay').addEventListener(ev,_rs,{passive:true}));
-    _sessListenersAttached=true;
-  }
+  ['mousemove','keydown','click'].forEach(ev=>document.getElementById('adminOverlay').addEventListener(ev,_rs,{passive:true}));
 }
 function _rs(){
   document.getElementById('sessionWarn').style.display='none';
@@ -886,15 +940,7 @@ function _rs(){
   sessT=setTimeout(()=>doLogout(true),SESS_MIN*60000);
 }
 function resetSession(e){if(e)e.preventDefault();_rs();}
-function endSession(){
-  isLoggedIn=false;_adminToken=null;
-  clearTimeout(sessT);clearTimeout(sessWT);clearInterval(sessTick);
-  document.getElementById('sessionWarn').style.display='none';
-  if(_sessListenersAttached){
-    ['mousemove','keydown','click'].forEach(ev=>document.getElementById('adminOverlay').removeEventListener(ev,_rs));
-    _sessListenersAttached=false;
-  }
-}
+function endSession(){isLoggedIn=false;_adminToken=null;clearTimeout(sessT);clearTimeout(sessWT);clearInterval(sessTick);document.getElementById('sessionWarn').style.display='none';}
 document.addEventListener('keydown',e=>{if(!isLoggedIn)return;if(e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key))||(e.ctrlKey&&e.key==='U')){e.preventDefault();toast('Developer tools disabled.');}});
 document.addEventListener('contextmenu',e=>{if(isLoggedIn)e.preventDefault();});
 function showLoading(t){document.getElementById('loadingText').textContent=t||'Loading...';document.getElementById('loadingOverlay').classList.add('show');}
@@ -947,6 +993,7 @@ async function doLogin(){
 
   resetFails();
 
+  // IMPORTANT
   _adminToken = 'ICA@Secret';
 
   hideLogin();
@@ -956,7 +1003,7 @@ async function doLogin(){
   await refreshAll();
 }
 function doLogout(auto){endSession();document.getElementById('adminOverlay').classList.remove('show');toast(auto?'Auto-logged out due to inactivity.':'Logged out.');}
-const TITLES={dashboard:'Dashboard',admissions:'Admission Applications',enquiries:'Parent Enquiries',notices:'Notices',gallery:'Gallery',password:'Change Password'};
+const TITLES={dashboard:'Dashboard',admissions:'Admission Applications',enquiries:'Parent Enquiries',notices:'Notices',gallery:'Gallery',formbuilder:'Admission Form Builder',customforms:'Custom Forms',sitesettings:'Site Settings',password:'Change Password'};
 async function showPanel(id){
   document.querySelectorAll('.admin-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(a=>a.classList.remove('active'));
@@ -967,6 +1014,9 @@ async function showPanel(id){
   if(id==='enquiries')await loadEnquiries();
   if(id==='notices')await loadNotices();
   if(id==='gallery')await loadGallery();
+  if(id==='formbuilder')await loadFormBuilder();
+  if(id==='customforms')await loadCustomForms();
+  if(id==='sitesettings')await loadSiteSettings();
 }
 let _admOpen=false;
 async function checkAdmissionStatus(){
@@ -993,6 +1043,7 @@ let currentStep=1;
 async function openAdmissionPage(){
   showLoading('Loading...');
   try{const r=await adm('admission_status');_admOpen=r.open;}catch{_admOpen=false;}
+  try{const sr=await api('get_settings');const yl=document.getElementById('admYearLabel');if(yl&&sr.data&&sr.data.admission_year)yl.textContent=sr.data.admission_year;}catch(e){}
   hideLoading();
   document.getElementById('admPage').classList.add('show');
   document.body.style.overflow='hidden';
@@ -1100,7 +1151,7 @@ async function submitAdmission(){
     document.querySelectorAll('.adm-section').forEach(s=>s.classList.remove('active'));
     document.getElementById('step-success').classList.add('active');
     document.querySelectorAll('.adm-step').forEach(s=>s.classList.add('done'));
-    document.getElementById('admAppId').textContent='Application ID: ICA-'+String(r.data?.id||'').slice(0,8).toUpperCase();
+    document.getElementById('admAppId').textContent='Application No: '+(r.data&&r.data.application_number?r.data.application_number:('ICA-'+String(r.data?.id||'').slice(0,8).toUpperCase()));
   }catch(e){
     hideLoading();
     document.getElementById('admFormErr').textContent='Error: '+e.message;
@@ -1142,13 +1193,13 @@ function renderAdmissions() {
 
   tbody.innerHTML = list.map((a, i) => {
     const d = new Date(a.created_at).toLocaleDateString('en-IN');
-    const aid = 'ICA-' + String(a.id).slice(0, 8).toUpperCase();
+    const aid = a.application_number || ('ICA-' + String(a.id).slice(0, 8).toUpperCase());
 
     return `
       <tr>
         <td>${i + 1}</td>
         <td>${d}</td>
-        <td style="font-size:11px;color:var(--muted)">${aid}</td>
+        <td style="font-size:11px;color:var(--muted);font-weight:600">${aid}</td>
         <td><strong>${esc(a.student_name)}</strong></td>
         <td>${a.applying_class}</td>
         <td>${a.dob || '-'}</td>
@@ -1160,6 +1211,7 @@ function renderAdmissions() {
         </td>
         <td class="tbl-actions">
           <button class="btn-vw" onclick="viewAdm('${a.id}')">View</button>
+          <button class="btn-vw" style="background:#f5f3ff;color:#5b21b6;border-color:#ddd6fe" onclick="viewDocs('${a.id}')">Docs</button>
           <button class="btn-confirm" onclick="setAdmStatus('${a.id}','Confirmed')">OK</button>
           <button class="btn-reject" onclick="setAdmStatus('${a.id}','Rejected')">X</button>
           <button class="btn-del" onclick="delAdm('${a.id}')">Del</button>
@@ -1172,11 +1224,11 @@ function renderAdmissions() {
 async function viewAdm(id){
   const a=_adms.find(x=>x.id==id);if(!a)return;
   const d=new Date(a.created_at).toLocaleDateString('en-IN');
-  const aid='ICA-'+String(a.id).slice(0,8).toUpperCase();
+  const aid=a.application_number || ('ICA-'+String(a.id).slice(0,8).toUpperCase());
   document.getElementById('modal-title').textContent='Application - '+a.student_name;
   document.getElementById('modal-body').innerHTML=
     '<div class="msec">Application Info</div>'+
-    '<div class="mdi"><label>App ID</label><p>'+aid+'</p></div>'+
+    '<div class="mdi"><label>Application No.</label><p style="font-weight:700">'+aid+'</p></div>'+
     '<div class="mdi"><label>Date</label><p>'+d+'</p></div>'+
     '<div class="mdi"><label>Status</label><p><span class="pill '+apill(a.status)+'">'+a.status+'</span></p></div>'+
     '<div class="mdi"><label>Remarks</label><p>'+esc(a.remarks||'-')+'</p></div>'+
@@ -1200,11 +1252,11 @@ async function viewAdm(id){
     '<div class="mdi full"><label>Address</label><p>'+esc(a.address||'-')+', '+esc(a.village||'')+', '+esc(a.district||'')+' - '+(a.pincode||'')+'</p></div>'+
     '<div class="mdi"><label>Transport</label><p>'+(a.transport||'-')+'</p></div>'+
     '<div class="msec">Documents</div>'+
-    '<div class="mdi"><label>Photo</label><p>'+(a.photo_url?'Uploaded':'Not uploaded')+'</p></div>'+
-    '<div class="mdi"><label>Birth Cert</label><p>'+(a.doc_birth_cert?'Uploaded':'Not uploaded')+'</p></div>'+
-    '<div class="mdi"><label>Marksheet</label><p>'+(a.doc_marksheet?'Uploaded':'Not uploaded')+'</p></div>'+
-    '<div class="mdi"><label>TC</label><p>'+(a.doc_tc?'Uploaded':'Not uploaded')+'</p></div>'+
-    '<div class="mdi"><label>Aadhaar Card</label><p>'+(a.doc_aadhaar?'Uploaded':'Not uploaded')+'</p></div>'+
+    '<div class="mdi"><label>Photo</label><p>'+(a.photo_file_url?'<a href="'+a.photo_file_url+'" target="_blank" style="color:var(--blue)">View</a>':'Not uploaded')+'</p></div>'+
+    '<div class="mdi"><label>Birth Cert</label><p>'+(a.birth_cert_url?'<a href="'+a.birth_cert_url+'" target="_blank" style="color:var(--blue)">View</a>':'Not uploaded')+'</p></div>'+
+    '<div class="mdi"><label>Marksheet</label><p>'+(a.marksheet_url?'<a href="'+a.marksheet_url+'" target="_blank" style="color:var(--blue)">View</a>':'Not uploaded')+'</p></div>'+
+    '<div class="mdi"><label>TC</label><p>'+(a.tc_url?'<a href="'+a.tc_url+'" target="_blank" style="color:var(--blue)">View</a>':'Not uploaded')+'</p></div>'+
+    '<div class="mdi"><label>Aadhaar Card</label><p>'+(a.aadhaar_url?'<a href="'+a.aadhaar_url+'" target="_blank" style="color:var(--blue)">View</a>':'Not uploaded')+'</p></div>'+
     '<div class="mdi full"><label>Achievements</label><p>'+esc(a.achievements||'-')+'</p></div>'+
     '<div class="mdi full"><label>Medical</label><p>'+esc(a.medical||'-')+'</p></div>'+
     '<div class="mdi full" style="margin-top:8px"><label>Add Remarks</label><textarea id="adm-remark-input" style="width:100%;padding:9px;border:1.5px solid var(--border);border-radius:7px;font-family:Inter,sans-serif;font-size:13px;outline:none;resize:vertical;">'+esc(a.remarks||'')+'</textarea></div>';
@@ -1219,6 +1271,10 @@ async function viewAdm(id){
   <button class="btn-reject" onclick="setAdmStatus('${a.id}','Rejected');closeModal()">Reject</button>
 
   <button class="btn-prnt" onclick="printAdmDetail('${a.id}')">Print</button>
+
+  <button style="background:#f5f3ff;color:#5b21b6;padding:7px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #ddd6fe;" onclick="viewDocs('${a.id}')">View Documents</button>
+
+  <button style="background:#fffbeb;color:#92400e;padding:7px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid #fcd34d;" onclick="printSlip('${a.id}')">Confirmation Slip</button>
 
   <button class="btn-add" onclick="saveRemark('${a.id}')">Save Remark</button>
 
@@ -1247,7 +1303,7 @@ function printAdmDetail(id){
   const w=window.open('','_blank');
   w.document.write('<html><head><title>Application</title><style>body{font-family:Arial;padding:20px}h2{color:#0a1628;margin-bottom:4px}h3{color:#0a1628;margin:16px 0 8px;border-bottom:1px solid #ddd;padding-bottom:4px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.item label{font-size:10px;color:#888;text-transform:uppercase;display:block}.item p{font-weight:600;font-size:13px}</style></head><body>'+
     '<h2>Ideal Children Academy Batrauliya</h2><p style="color:#888">Batrauliya, Paharpur, East Champaran 845458</p>'+
-    '<h3>Admission Application - ICA-'+String(a.id).slice(0,8).toUpperCase()+'</h3>'+
+    '<h3>Admission Application - '+(a.application_number||('ICA-'+String(a.id).slice(0,8).toUpperCase()))+'</h3>'+
     '<div class="grid">'+
     '<div class="item"><label>Student Name</label><p>'+esc(a.student_name)+'</p></div>'+
     '<div class="item"><label>Class</label><p>'+a.applying_class+'</p></div>'+
@@ -1261,6 +1317,90 @@ function printAdmDetail(id){
     '</div><p style="margin-top:20px;font-size:11px;color:#888">Generated: '+new Date().toLocaleDateString('en-IN')+'</p></body></html>');
   w.document.close();setTimeout(()=>w.print(),400);
 }
+
+function viewDocs(id){
+  const a=_adms.find(x=>x.id==id);if(!a)return;
+  const docs=[
+    {label:'Student Photo',url:a.photo_file_url,icon:'\u{1F5BC}\uFE0F'},
+    {label:'Birth Certificate',url:a.birth_cert_url,icon:'\u{1F4DC}'},
+    {label:'Marksheet / Report Card',url:a.marksheet_url,icon:'\u{1F4CB}'},
+    {label:'Transfer Certificate',url:a.tc_url,icon:'\u{1F3EB}'},
+    {label:'Aadhaar Card',url:a.aadhaar_url,icon:'\u{1FAAA}'}
+  ];
+  document.getElementById('modal-title').textContent='Documents - '+a.student_name;
+  let html='<div class="msec" style="grid-column:1/-1">Uploaded Documents</div>';
+  docs.forEach(d=>{
+    if(d.url){
+      const isImg=/\.(jpg|jpeg|png|gif|webp)$/i.test(d.url);
+      html+='<div class="mdi full" style="border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:4px;">'+
+        '<label>'+d.icon+' '+d.label+'</label>'+
+        (isImg ? '<a href="'+d.url+'" target="_blank"><img src="'+d.url+'" style="max-width:200px;max-height:200px;border-radius:8px;margin-top:6px;border:1px solid var(--border);display:block;"/></a>' : '')+
+        '<a href="'+d.url+'" target="_blank" style="display:inline-block;margin-top:8px;background:var(--blue-bg);color:var(--blue);padding:6px 12px;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;">Open / Download</a>'+
+        '</div>';
+    } else {
+      html+='<div class="mdi full" style="border:1px dashed var(--border);border-radius:10px;padding:12px;margin-bottom:4px;opacity:0.6;">'+
+        '<label>'+d.icon+' '+d.label+'</label><p>Not uploaded</p></div>';
+    }
+  });
+  document.getElementById('modal-body').innerHTML=html;
+  document.getElementById('modal-btns').innerHTML='<button class="btn-prnt" onclick="viewAdm(\''+a.id+'\')">&larr; Back to Details</button>';
+  document.getElementById('modalBg').classList.add('show');
+}
+
+function printSlip(id){
+  const a=_adms.find(x=>x.id==id);if(!a)return;
+  if(a.status!=='Confirmed'){ if(!confirm('This application is not yet Confirmed. Print slip anyway?')) return; }
+  const appNo=a.application_number||('ICA-'+String(a.id).slice(0,8).toUpperCase());
+  const photoHtml = a.photo_file_url ? '<img src="'+a.photo_file_url+'" style="width:100px;height:120px;object-fit:cover;border:2px solid #0a1628;border-radius:6px;"/>' : '<div style="width:100px;height:120px;border:2px dashed #999;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#999;text-align:center;">No Photo</div>';
+  const w=window.open('','_blank');
+  w.document.write('<html><head><title>Admission Confirmation Slip - '+appNo+'</title><style>'+
+    '@page{size:A5;margin:14mm;}'+
+    'body{font-family:Georgia,serif;padding:0;margin:0;color:#1a2332;}'+
+    '.slip{border:3px solid #0a1628;border-radius:10px;padding:24px;position:relative;}'+
+    '.slip::before{content:"";position:absolute;inset:8px;border:1px solid #c9982a;border-radius:6px;pointer-events:none;}'+
+    '.hd{text-align:center;margin-bottom:16px;border-bottom:2px solid #c9982a;padding-bottom:12px;}'+
+    '.hd h1{font-size:18px;color:#0a1628;margin:0 0 4px;letter-spacing:0.5px;}'+
+    '.hd p{font-size:11px;color:#666;margin:0;}'+
+    '.badge{display:inline-block;background:#0a1628;color:#fff;padding:4px 14px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:1px;margin-top:8px;}'+
+    '.body-row{display:flex;gap:18px;margin-top:18px;}'+
+    '.info{flex:1;}'+
+    '.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dotted #ccc;font-size:12.5px;}'+
+    '.row label{color:#666;font-weight:600;}'+
+    '.row span{font-weight:700;color:#0a1628;}'+
+    '.appno{text-align:center;background:#fdf8f0;border:1.5px solid #c9982a;border-radius:8px;padding:10px;margin:16px 0;}'+
+    '.appno label{display:block;font-size:10px;color:#92400e;text-transform:uppercase;letter-spacing:1px;}'+
+    '.appno span{font-size:20px;font-weight:700;color:#0a1628;font-family:monospace;letter-spacing:1px;}'+
+    '.status{text-align:center;margin-top:14px;}'+
+    '.status span{display:inline-block;padding:6px 18px;border-radius:100px;font-size:12px;font-weight:700;background:#dcfce7;color:#166534;border:1px solid #a8d5b5;}'+
+    '.ft{margin-top:22px;display:flex;justify-content:space-between;align-items:flex-end;font-size:10.5px;color:#666;}'+
+    '.sig{text-align:center;}'+
+    '.sig-line{width:120px;border-top:1px solid #999;margin-bottom:4px;}'+
+    '</style></head><body>'+
+    '<div class="slip">'+
+      '<div class="hd"><h1>IDEAL CHILDREN ACADEMY</h1><p>Batrauliya, Paharpur, East Champaran, Bihar - 845458</p><div class="badge">ADMISSION CONFIRMATION SLIP</div></div>'+
+      '<div class="appno"><label>Application Number</label><span>'+appNo+'</span></div>'+
+      '<div class="body-row">'+
+        '<div class="info">'+
+          '<div class="row"><label>Student Name</label><span>'+esc(a.student_name)+'</span></div>'+
+          '<div class="row"><label>Class</label><span>'+a.applying_class+'</span></div>'+
+          '<div class="row"><label>Date of Birth</label><span>'+(a.dob||'-')+'</span></div>'+
+          '<div class="row"><label>Gender</label><span>'+(a.gender||'-')+'</span></div>'+
+          '<div class="row"><label>Father Name</label><span>'+esc(a.father_name||'-')+'</span></div>'+
+          '<div class="row"><label>Contact</label><span>'+a.contact_phone+'</span></div>'+
+          '<div class="row"><label>Academic Year</label><span>'+(a.academic_year||'-')+'</span></div>'+
+        '</div>'+
+        '<div>'+photoHtml+'</div>'+
+      '</div>'+
+      '<div class="status"><span>STATUS: '+a.status.toUpperCase()+'</span></div>'+
+      '<div class="ft">'+
+        '<div>Issued: '+new Date().toLocaleDateString('en-IN')+'</div>'+
+        '<div class="sig"><div class="sig-line"></div>Principal Signature</div>'+
+      '</div>'+
+    '</div>'+
+    '</body></html>');
+  w.document.close();setTimeout(()=>w.print(),500);
+}
+
 function exportAdmPDF(){
   const list=getAdmFiltered();if(!list.length){toast('No data!');return;}
   const rows=list.map((a,i)=>'<tr><td>'+(i+1)+'</td><td>'+new Date(a.created_at).toLocaleDateString('en-IN')+'</td><td>'+esc(a.student_name)+'</td><td>'+a.applying_class+'</td><td>'+esc(a.father_name||'-')+'</td><td>'+a.contact_phone+'</td><td>'+a.status+'</td></tr>').join('');
@@ -1289,7 +1429,6 @@ function exportAdmExcel() {
 
   toast('Exported!');
 }
-// exportAdmExcel end
 
 function printAdmTable(){
   const list=getAdmFiltered();
@@ -1511,6 +1650,290 @@ async function updateDash(){
   }catch{}
 }
 async function refreshAll(){showLoading('Loading...');await Promise.all([loadAdmissions(),loadEnquiries(),checkAdmissionStatus()]);await updateDash();hideLoading();}
+
+// ══════════════════════════════════════
+// SITE SETTINGS (Year + Theme)
+// ══════════════════════════════════════
+async function loadSiteSettings(){
+  try{
+    const r=await api('get_settings');
+    const d=r.data||{};
+    document.getElementById('set-year').value=d.admission_year||'2026-27';
+    document.getElementById('set-gold').value=d.theme_primary||'#c9982a';
+    document.getElementById('set-navy').value=d.theme_navy||'#0a1628';
+  }catch(e){toast('Error loading settings: '+e.message);}
+}
+async function saveSiteSetting(key,inputId){
+  const val=document.getElementById(inputId).value.trim();
+  if(!val){toast('Please enter a value.');return;}
+  showLoading('Saving...');
+  try{
+    await api('update_setting','POST',{key,value:val});
+    toast('Saved! New applications will use this value.');
+    if(key==='admission_year'){const yl=document.getElementById('admYearLabel');if(yl)yl.textContent=val;}
+  }catch(e){toast('Error: '+e.message);}
+  hideLoading();
+}
+async function saveTheme(){
+  const gold=document.getElementById('set-gold').value;
+  const navy=document.getElementById('set-navy').value;
+  showLoading('Applying theme...');
+  try{
+    await api('update_setting','POST',{key:'theme_primary',value:gold});
+    await api('update_setting','POST',{key:'theme_navy',value:navy});
+    applyTheme(gold,navy);
+    toast('Theme applied! Visible to all visitors now.');
+  }catch(e){toast('Error: '+e.message);}
+  hideLoading();
+}
+function applyTheme(gold,navy){
+  if(!gold||!navy)return;
+  const root=document.documentElement.style;
+  root.setProperty('--gold',gold);
+  root.setProperty('--navy',navy);
+}
+async function loadThemeOnInit(){
+  try{
+    const r=await api('get_settings');
+    const d=r.data||{};
+    if(d.theme_primary&&d.theme_navy)applyTheme(d.theme_primary,d.theme_navy);
+  }catch(e){}
+}
+
+// ══════════════════════════════════════
+// ADMISSION FORM BUILDER
+// ══════════════════════════════════════
+let _fbSchema=null; // { sections:[{id,title,icon,fields:[{id,label,type,required,options}]}] }
+let _fbFormId=null;
+
+function fbDefaultSchema(){
+  return {
+    sections:[
+      {id:'sec1',title:'Student Information',icon:'\u{1F464}',fields:[
+        {id:'student_name',label:'Full Name',type:'text',required:true},
+        {id:'dob',label:'Date of Birth',type:'date',required:true},
+        {id:'gender',label:'Gender',type:'select',required:true,options:'Male,Female,Other'},
+        {id:'applying_class',label:'Applying for Class',type:'select',required:true,options:'Nursery,LKG,UKG,Class 1,Class 2,Class 3,Class 4,Class 5,Class 6,Class 7,Class 8,Class 9,Class 10'}
+      ]},
+      {id:'sec2',title:'Parent Information',icon:'\u{1F46A}',fields:[
+        {id:'father_name',label:"Father's Name",type:'text',required:true},
+        {id:'mother_name',label:"Mother's Name",type:'text',required:true},
+        {id:'contact_phone',label:'Contact Phone',type:'tel',required:true}
+      ]},
+      {id:'sec3',title:'Address',icon:'\u{1F3E0}',fields:[
+        {id:'address',label:'Full Address',type:'textarea',required:true}
+      ]}
+    ]
+  };
+}
+
+async function loadFormBuilder(){
+  showLoading('Loading form...');
+  try{
+    const r=await api('get_form','GET'.toString()).catch(()=>null);
+  }catch(e){}
+  try{
+    const list=await api('list_forms');
+    const existing=(list.data||[]).find(f=>f.form_key==='admission');
+    if(existing){ _fbFormId=existing.id; _fbSchema=existing.schema_json; }
+    else { _fbFormId=null; _fbSchema=fbDefaultSchema(); }
+  }catch(e){ _fbSchema=fbDefaultSchema(); }
+  fbRender();
+  hideLoading();
+}
+function fbLoadDefault(){
+  if(!confirm('Reset the form to default sections? Unsaved changes will be lost.'))return;
+  _fbSchema=fbDefaultSchema();
+  fbRender();
+}
+function resetFormBuilder(){ fbAddSection(); }
+function fbRender(){
+  const wrap=document.getElementById('fb-sections');
+  if(!_fbSchema||!_fbSchema.sections){wrap.innerHTML='<p style="color:var(--muted)">No sections yet.</p>';return;}
+  wrap.innerHTML=_fbSchema.sections.map((sec,si)=>`
+    <div style="border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;background:#fafbfd;">
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+        <input type="text" value="${esc(sec.icon||'')}" placeholder="Icon" style="width:48px;padding:7px;border:1px solid var(--border);border-radius:6px;text-align:center;" onchange="fbUpdateSection(${si},'icon',this.value)"/>
+        <input type="text" value="${esc(sec.title)}" placeholder="Section title" style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-weight:600;" onchange="fbUpdateSection(${si},'title',this.value)"/>
+        <button class="btn-del" onclick="fbDeleteSection(${si})">Delete Section</button>
+      </div>
+      <div id="fb-fields-${si}">
+        ${(sec.fields||[]).map((f,fi)=>fbFieldRow(si,fi,f)).join('')}
+      </div>
+      <button class="btn-add" style="margin-top:8px;" onclick="fbAddField(${si})">+ Add Field</button>
+    </div>
+  `).join('');
+}
+function fbFieldRow(si,fi,f){
+  const types=['text','tel','email','date','select','textarea','file','number'];
+  return `<div style="display:grid;grid-template-columns:1.4fr 1fr 0.7fr 1.3fr auto;gap:6px;margin-bottom:6px;align-items:center;">
+    <input type="text" value="${esc(f.label)}" placeholder="Field label" style="padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:12.5px;" onchange="fbUpdateField(${si},${fi},'label',this.value)"/>
+    <select style="padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:12.5px;" onchange="fbUpdateField(${si},${fi},'type',this.value)">
+      ${types.map(t=>`<option value="${t}" ${f.type===t?'selected':''}>${t}</option>`).join('')}
+    </select>
+    <label style="font-size:11.5px;display:flex;align-items:center;gap:4px;"><input type="checkbox" ${f.required?'checked':''} onchange="fbUpdateField(${si},${fi},'required',this.checked)"/> Req</label>
+    <input type="text" value="${esc(f.options||'')}" placeholder="Options (comma-separated, for select)" style="padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:12px;" onchange="fbUpdateField(${si},${fi},'options',this.value)"/>
+    <button class="btn-del" style="padding:5px 8px;" onclick="fbDeleteField(${si},${fi})">X</button>
+  </div>`;
+}
+function fbUpdateSection(si,key,val){ _fbSchema.sections[si][key]=val; }
+function fbUpdateField(si,fi,key,val){ _fbSchema.sections[si].fields[fi][key]=val; }
+function fbAddSection(){
+  if(!_fbSchema)_fbSchema={sections:[]};
+  _fbSchema.sections.push({id:'sec'+Date.now(),title:'New Section',icon:'\u{1F4C4}',fields:[]});
+  fbRender();
+}
+function fbDeleteSection(si){
+  if(!confirm('Delete this section and all its fields?'))return;
+  _fbSchema.sections.splice(si,1);
+  fbRender();
+}
+function fbAddField(si){
+  _fbSchema.sections[si].fields.push({id:'field'+Date.now(),label:'New Field',type:'text',required:false,options:''});
+  fbRender();
+}
+function fbDeleteField(si,fi){
+  _fbSchema.sections[si].fields.splice(fi,1);
+  fbRender();
+}
+async function fbSave(publish){
+  if(!_fbSchema||!_fbSchema.sections||!_fbSchema.sections.length){toast('Add at least one section first.');return;}
+  showLoading(publish?'Publishing form...':'Saving draft...');
+  try{
+    const payload={id:_fbFormId,form_key:'admission',title:'Admission Form',schema_json:_fbSchema,is_active:!!publish};
+    const r=await api('save_form','POST',payload);
+    if(r.data&&r.data.id)_fbFormId=r.data.id;
+    toast(publish?'Form published! Now live on website.':'Draft saved.');
+  }catch(e){toast('Error: '+e.message);}
+  hideLoading();
+}
+
+// ══════════════════════════════════════
+// CUSTOM FORMS (non-admission, generic)
+// ══════════════════════════════════════
+let _customForms=[];
+async function loadCustomForms(){
+  document.getElementById('customforms-body').innerHTML='<tr><td colspan="6" class="no-data">Loading...</td></tr>';
+  try{
+    const r=await api('list_forms');
+    _customForms=(r.data||[]).filter(f=>f.form_key!=='admission');
+  }catch(e){_customForms=[];}
+  renderCustomForms();
+  const sel=document.getElementById('cf-select');
+  sel.innerHTML='<option value="">Select a form...</option>'+_customForms.map(f=>`<option value="${f.form_key}">${esc(f.title)}</option>`).join('');
+}
+function renderCustomForms(){
+  const tbody=document.getElementById('customforms-body');
+  if(!_customForms.length){tbody.innerHTML='<tr><td colspan="6" class="no-data">No custom forms yet. Click "Create New Form".</td></tr>';return;}
+  tbody.innerHTML=_customForms.map((f,i)=>`<tr>
+    <td>${i+1}</td><td><strong>${esc(f.title)}</strong></td><td style="font-size:11px;color:var(--muted)">${esc(f.form_key)}</td>
+    <td><span class="pill ${f.is_active?'pill-contacted':'pill-pending'}">${f.is_active?'Live':'Draft'}</span></td>
+    <td>${new Date(f.updated_at).toLocaleDateString('en-IN')}</td>
+    <td class="tbl-actions">
+      <button class="btn-vw" onclick="openCustomFormEditor('${f.id}')">Edit</button>
+      <button class="btn-confirm" onclick="toggleCustomForm('${f.id}',${!f.is_active})">${f.is_active?'Unpublish':'Publish'}</button>
+      <button class="btn-del" onclick="deleteCustomForm('${f.id}')">Delete</button>
+    </td></tr>`).join('');
+}
+async function toggleCustomForm(id,activate){
+  try{await api('toggle_form','POST',{id,is_active:activate});toast(activate?'Form is now live!':'Form unpublished.');loadCustomForms();}
+  catch(e){toast('Error: '+e.message);}
+}
+async function deleteCustomForm(id){
+  if(!confirm('Delete this form and all its responses?'))return;
+  try{await api('delete_form','POST',{id});toast('Deleted.');loadCustomForms();}
+  catch(e){toast('Error: '+e.message);}
+}
+let _cfEditId=null, _cfEditSchema=null;
+async function openCustomFormEditor(id){
+  _cfEditId=id||null;
+  if(id){
+    try{const r=await api('get_form','GET');}catch(e){}
+    const found=_customForms.find(f=>f.id===id);
+    _cfEditSchema=found?JSON.parse(JSON.stringify(found.schema_json)):fbDefaultSchema();
+    var titleVal=found?found.title:'New Form';
+    var keyVal=found?found.form_key:('form_'+Date.now());
+  } else {
+    _cfEditSchema={sections:[{id:'sec1',title:'Details',icon:'\u{1F4DD}',fields:[{id:'name',label:'Full Name',type:'text',required:true}]}]};
+    var titleVal='New Form';
+    var keyVal='form_'+Date.now();
+  }
+  document.getElementById('modal-title').textContent='Form Editor';
+  document.getElementById('modal-body').innerHTML=`
+    <div class="mdi full"><label>Form Title</label><input type="text" id="cfe-title" value="${esc(titleVal)}" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;"/></div>
+    <div class="mdi full"><label>Form Key (unique, no spaces)</label><input type="text" id="cfe-key" value="${esc(keyVal)}" style="width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;" ${id?'readonly':''}/></div>
+    <div class="mdi full" id="cfe-sections" style="margin-top:8px;"></div>
+    <div class="mdi full"><button class="btn-add" onclick="cfeAddSection()">+ Add Section</button></div>
+  `;
+  document.getElementById('modal-btns').innerHTML='<button class="btn-excel" onclick="saveCustomForm()">Save Form</button>';
+  cfeRenderSections();
+  document.getElementById('modalBg').classList.add('show');
+}
+function cfeRenderSections(){
+  const wrap=document.getElementById('cfe-sections');
+  wrap.innerHTML=_cfEditSchema.sections.map((sec,si)=>`
+    <div style="border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:10px;background:#fafbfd;">
+      <input type="text" value="${esc(sec.title)}" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-weight:600;margin-bottom:6px;" onchange="_cfEditSchema.sections[${si}].title=this.value"/>
+      ${(sec.fields||[]).map((f,fi)=>`
+        <div style="display:grid;grid-template-columns:1.4fr 1fr 0.7fr auto;gap:6px;margin-bottom:5px;">
+          <input type="text" value="${esc(f.label)}" style="padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-size:12px;" onchange="_cfEditSchema.sections[${si}].fields[${fi}].label=this.value"/>
+          <select style="padding:5px 7px;border:1px solid var(--border);border-radius:5px;font-size:12px;" onchange="_cfEditSchema.sections[${si}].fields[${fi}].type=this.value">
+            ${['text','tel','email','date','select','textarea','number'].map(t=>`<option value="${t}" ${f.type===t?'selected':''}>${t}</option>`).join('')}
+          </select>
+          <label style="font-size:11px;display:flex;align-items:center;gap:3px;"><input type="checkbox" ${f.required?'checked':''} onchange="_cfEditSchema.sections[${si}].fields[${fi}].required=this.checked"/>Req</label>
+          <button class="btn-del" style="padding:4px 7px;" onclick="_cfEditSchema.sections[${si}].fields.splice(${fi},1);cfeRenderSections()">X</button>
+        </div>
+      `).join('')}
+      <button class="btn-add" style="font-size:11px;padding:4px 10px;" onclick="_cfEditSchema.sections[${si}].fields.push({id:'f'+Date.now(),label:'New Field',type:'text',required:false});cfeRenderSections()">+ Field</button>
+    </div>
+  `).join('');
+}
+function cfeAddSection(){ _cfEditSchema.sections.push({id:'sec'+Date.now(),title:'New Section',icon:'',fields:[]}); cfeRenderSections(); }
+async function saveCustomForm(){
+  const title=document.getElementById('cfe-title').value.trim();
+  const key=document.getElementById('cfe-key').value.trim().replace(/\s+/g,'_');
+  if(!title||!key){toast('Title and key are required.');return;}
+  showLoading('Saving form...');
+  try{
+    await api('save_form','POST',{id:_cfEditId,form_key:key,title,schema_json:_cfEditSchema,is_active:false});
+    toast('Form saved as draft. Publish it from the list to make it live.');
+    closeModal();
+    loadCustomForms();
+  }catch(e){toast('Error: '+e.message);}
+  hideLoading();
+}
+async function loadCustomFormResponses(){
+  const key=document.getElementById('cf-select').value;
+  const tbody=document.getElementById('cfresp-body');
+  if(!key){tbody.innerHTML='<tr><td colspan="5" class="no-data">Select a form above.</td></tr>';return;}
+  tbody.innerHTML='<tr><td colspan="5" class="no-data">Loading...</td></tr>';
+  try{
+    const r=await api('get_form_submissions','GET');
+  }catch(e){}
+  try{
+    const r2=await fetch(API+'?action=get_form_submissions&form_key='+encodeURIComponent(key),{headers:{'x-admin-token':_adminToken}});
+    const d2=await r2.json();
+    const subs=d2.data||[];
+    if(!subs.length){tbody.innerHTML='<tr><td colspan="5" class="no-data">No responses yet.</td></tr>';return;}
+    tbody.innerHTML=subs.map((s,i)=>{
+      const summary=Object.values(s.data_json||{}).slice(0,3).map(v=>esc(String(v))).join(', ');
+      return `<tr><td>${i+1}</td><td>${new Date(s.created_at).toLocaleDateString('en-IN')}</td><td>${summary}</td>
+        <td><span class="pill ${s.status==='Done'?'pill-contacted':'pill-new'}">${s.status}</span></td>
+        <td class="tbl-actions"><button class="btn-confirm" onclick="markFormSubDone('${s.id}','${key}')">Done</button><button class="btn-del" onclick="delFormSub('${s.id}','${key}')">Del</button></td></tr>`;
+    }).join('');
+  }catch(e){tbody.innerHTML='<tr><td colspan="5" class="no-data">Error loading responses.</td></tr>';}
+}
+async function markFormSubDone(id,key){
+  try{await api('update_form_submission','POST',{id,status:'Done'});toast('Marked done.');loadCustomFormResponses();}
+  catch(e){toast('Error: '+e.message);}
+}
+async function delFormSub(id,key){
+  if(!confirm('Delete this response?'))return;
+  try{await api('delete_form_submission','POST',{id});toast('Deleted.');loadCustomFormResponses();}
+  catch(e){toast('Error: '+e.message);}
+}
+
+
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
 function toggleMob(){document.getElementById('mobMenu').classList.toggle('open');}
@@ -1523,6 +1946,7 @@ window.addEventListener('scroll',()=>{
 });
 renderPublicNotices();
 checkAdmissionStatus();
+loadThemeOnInit();
 </script>
 </body>
 </html>
